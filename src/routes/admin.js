@@ -1,6 +1,8 @@
 const express = require("express");
 const router = new express.Router();
 const Admin = require("../models/admin");
+const Category = require("../models/category");
+const Product = require("../models/product");
 const adminAuth = require("../middleware/adminAuth");
 router.post("/signup", async (req, res) => {
   try {
@@ -27,6 +29,45 @@ router.get("/signin", async (req, res) => {
     res.status(401).send({ message: "Unable to login", e });
   }
 });
+
+// create category
+router.post("/category", adminAuth, async (req, res) => {
+  try {
+    const category = new Category({
+      name: req.body.name,
+      imageUrl: req.body.imageUrl,
+    });
+    await category.save();
+    res.send({ message: "Successfully Created Category!" });
+  } catch (e) {
+    res.status(400).send({ error: "An error occured", e });
+  }
+});
+
+// create product
+router.post("/product", adminAuth, async (req, res) => {
+  try {
+    const category = await Category.findOne({ name: req.body.category });
+    if (!category) {
+      throw "Category Invalid!";
+    }
+    const product = new Product({
+      name: req.body.name,
+      price: req.body.price,
+      metric: req.body.metric,
+      imageUrl: req.body.imageUrl,
+      description: req.body.description,
+      category: category._id,
+    });
+    category.products.push(product._id);
+    await product.save();
+    await category.save();
+    res.send({ message: "Successfully Created Product!", product });
+  } catch (e) {
+    res.status(400).send({ error: "An error occured", e });
+  }
+});
+// admin auth test route
 router.get("/test", adminAuth, (req, res) => {
   res.send({ message: "Successfully accessed authenticated route" });
 });
