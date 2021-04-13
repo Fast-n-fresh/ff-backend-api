@@ -5,6 +5,8 @@ const Category = require("../models/category");
 const Product = require("../models/product");
 const adminAuth = require("../middleware/adminAuth");
 const Feedback = require("../models/feedback");
+const Order = require("../models/order");
+const DeliveryBoy = require("../models/deliveryBoy");
 router.post("/signup", async (req, res) => {
   try {
     const admin = new Admin({
@@ -30,7 +32,27 @@ router.get("/signin", async (req, res) => {
     res.status(401).send({ message: "Unable to login", e });
   }
 });
-
+// update admin
+router.patch("/profile", adminAuth, async (req, res) => {
+  try {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ["name", "email"];
+    const isValidUpdate = updates.every((update) =>
+      allowedUpdates.includes(update)
+    );
+    if (!isValidUpdate) {
+      return res.status(400).send({ error: "Invalid Updates" });
+    }
+    const admin = req.admin;
+    updates.forEach((updateField) => {
+      admin[updateField] = req.body[updateField];
+    });
+    await admin.save();
+    res.send({ message: "Admin Profile Updated Successfully!" });
+  } catch (e) {
+    res.status(400).send({ message: "Unable to update", e });
+  }
+});
 // create category
 router.post("/category", adminAuth, async (req, res) => {
   try {
@@ -81,8 +103,42 @@ router.get("/feedback", adminAuth, async (req, res) => {
     res.status(404).send({ error: "There was an error! ", e });
   }
 });
-// admin auth test route
-router.get("/test", adminAuth, (req, res) => {
-  res.send({ message: "Successfully accessed authenticated route" });
+
+// get pending orders
+router.get("/order", adminAuth, async (req, res) => {
+  try {
+    const pendingOrders = await Order.find({ status: "Pending" });
+    if (!pendingOrders) {
+      res.send({ message: "No pending orders!" });
+      return;
+    }
+    res.send({ message: "List of pending orders", pendingOrders });
+  } catch (e) {}
 });
+
+// update order status
+/* asigning delivery boy to the order */
+router.patch("/order", adminAuth, async (req, res) => {
+  try {
+    const order = await Order.findById(req._id);
+    if (!order) {
+      throw "No Order Exists!";
+    }
+    const deliveryBoy = await DeliveryBoy.findOne({
+      name: req.body.deliveryBoyName,
+    });
+    if (!deliveryBoy) {
+      throw "Invalid Delvery Boy Name!";
+    }
+    deliveryBoy.pendingOrders.push(order._id);
+    order.deliveryBoy = deliveryBoy._id;
+    order.status = "Placed";
+    await deliveryBoy.save();
+    await order.save();
+  } catch (e) {
+    res.status(404).send({ error: "An error occured!", e });
+  }
+});
+
+//TODO : GetGrossDelvieryStatus
 module.exports = router;

@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema({
   deliveryBoy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "DeliveryBoy",
-    required: true,
+    required: false,
   },
   timeStamp: { type: Date, default: Date.now },
 });
