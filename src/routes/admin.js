@@ -4,6 +4,7 @@ const Admin = require("../models/admin");
 const Category = require("../models/category");
 const Product = require("../models/product");
 const adminAuth = require("../middleware/adminAuth");
+const Feedback = require("../models/feedback");
 router.post("/signup", async (req, res) => {
   try {
     const admin = new Admin({
@@ -65,6 +66,19 @@ router.post("/product", adminAuth, async (req, res) => {
     res.send({ message: "Successfully Created Product!", product });
   } catch (e) {
     res.status(400).send({ error: "An error occured", e });
+  }
+});
+
+// get feedbacks
+router.get("/feedback", adminAuth, async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find({});
+    if (!feedbacks) {
+      throw "No Feedbacks Yet!";
+    }
+    res.send({ message: "Successfully sent feedbacks!", feedbacks });
+  } catch (e) {
+    res.status(404).send({ error: "There was an error! ", e });
   }
 });
 // admin auth test route

@@ -1,7 +1,9 @@
 const express = require("express");
 const router = new express.Router();
 const User = require("../models/user");
+const DeliveryBoy = require("../models/deliveryBoy");
 const userAuth = require("../middleware/userAuth");
+const Feedback = require("../models/feedback");
 
 // user signup
 router.post("/signup", async (req, res) => {
@@ -35,6 +37,29 @@ router.get("/signin", async (req, res) => {
   }
 });
 
+// create feedback
+router.post("/feedback", userAuth, async (req, res) => {
+  try {
+    const deliveryBoyName = req.body.deliveryBoyName;
+    let searchParams = {
+      user: req.user._id,
+      message: req.body.message,
+      rating: req.body.rating,
+    };
+    if (deliveryBoyName) {
+      const deliveryBoy = await DeliveryBoy.findOne({ name: deliveryBoyName });
+      if (!deliveryBoy) {
+        throw "Invalid Delivery Boy Name";
+      }
+      searchParams = { ...searchParams, deliveryBoy: deliveryBoy._id };
+    }
+    const feedback = new Feedback(searchParams);
+    await feedback.save();
+    res.send({ message: "Feedback created successfully!" });
+  } catch (e) {
+    res.status(400).send({ message: "An error occured!", e });
+  }
+});
 // user test
 router.get("/test", userAuth, (req, res) => {
   res.send({ message: "Successfully accessed authenticated route" });
