@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
+    minlength: 10,
     trim: true,
   },
   address: {
@@ -46,9 +47,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  // currentCart: [],
-  // prevOrders: [],
-  // feedback: {},
+  prevOrders: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+    },
+  ],
 });
 
 //return public data of the user (object/instance)
@@ -67,15 +71,19 @@ userSchema.methods.generateAuthToken = async function () {
 
 //static method accessible by our Model(User)
 userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new Error("Unable to login");
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new Error("Unable to login");
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new Error("Unable to login");
+    }
+    return user;
+  } catch (e) {
+    console.log(e);
   }
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    throw new Error("Unable to login");
-  }
-  return user;
 };
 
 //hash the plain text password before saving
