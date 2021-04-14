@@ -32,6 +32,24 @@ router.get("/signin", async (req, res) => {
     res.status(401).send({ message: "Unable to login", e });
   }
 });
+
+// craete delivery boy
+router.post("/deliveryBoy/signup", adminAuth, async (req, res) => {
+  try {
+    const deliveryBoy = new DeliveryBoy({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      phoneNumber: req.body.phoneNumber,
+    });
+    await deliveryBoy.save();
+    res
+      .status(201)
+      .send({ message: "DeliveryBoy creted successfully", deliveryBoy });
+  } catch (e) {
+    res.status(401).send({ message: "an error occured", e });
+  }
+});
 // update admin
 router.patch("/profile", adminAuth, async (req, res) => {
   try {
@@ -91,6 +109,55 @@ router.post("/product", adminAuth, async (req, res) => {
   }
 });
 
+//update product
+router.patch("/product/:productId", adminAuth, async (req, res) => {
+  try {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = [
+      "name",
+      "price",
+      "metric",
+      "imageUrl",
+      "description",
+    ];
+    const isValidUpdate = updates.every((update) =>
+      allowedUpdates.includes(update)
+    );
+    if (!isValidUpdate) {
+      return res.status(400).send({ error: "Invalid Updates" });
+    }
+    const product = await Product.findById(req.params.productId);
+    updates.forEach((updateField) => {
+      product[updateField] = req.body[updateField];
+    });
+    await product.save();
+    res.send({ message: "Product Updated Successfully!" });
+  } catch (e) {
+    res.status(400).send({ error: "An error occured", e });
+  }
+});
+
+//update category
+router.patch("/category/:categoryId", adminAuth, async (req, res) => {
+  try {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ["name", "imageUrl"];
+    const isValidUpdate = updates.every((update) =>
+      allowedUpdates.includes(update)
+    );
+    if (!isValidUpdate) {
+      return res.status(400).send({ error: "Invalid Updates" });
+    }
+    const category = await Category.findById(req.params.categoryId);
+    updates.forEach((updateField) => {
+      category[updateField] = req.body[updateField];
+    });
+    await category.save();
+    res.send({ message: "Category Updated Successfully!" });
+  } catch (e) {
+    res.status(400).send({ error: "An error occured", e });
+  }
+});
 // get feedbacks
 router.get("/feedback", adminAuth, async (req, res) => {
   try {
@@ -113,14 +180,17 @@ router.get("/order", adminAuth, async (req, res) => {
       return;
     }
     res.send({ message: "List of pending orders", pendingOrders });
-  } catch (e) {}
+  } catch (e) {
+    res.status(400).send({ error: "An Error occured!", e });
+  }
 });
 
 // update order status
 /* asigning delivery boy to the order */
 router.patch("/order", adminAuth, async (req, res) => {
   try {
-    const order = await Order.findById(req._id);
+    /* pass the order ID and deliveryBoy name in the request Body*/
+    const order = await Order.findById(req.body.orderId);
     if (!order) {
       throw "No Order Exists!";
     }
@@ -135,10 +205,25 @@ router.patch("/order", adminAuth, async (req, res) => {
     order.status = "Placed";
     await deliveryBoy.save();
     await order.save();
+    res.send({ message: "Order Assigned to delivery Boy successfully!!" });
   } catch (e) {
     res.status(404).send({ error: "An error occured!", e });
   }
 });
 
-//TODO : GetGrossDelvieryStatus
+/* Gross delivery status (returns the pending orders of each delivery boy)*/
+router.get("/delivery", adminAuth, async (req, res) => {
+  try {
+    const deliveryBoyList = await DeliveryBoy.find({});
+    const deliveryStatus = deliveryBoyList.map((db) => {
+      return { deliveryBoy: db.name, pendingOrders: db.pendingOrders };
+    });
+    res.send({
+      message: "List of pending orders per DeliveryBoy",
+      deliveryStatus,
+    });
+  } catch (e) {
+    res.status(404).send({ error: "An error occured!", e });
+  }
+});
 module.exports = router;

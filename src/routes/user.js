@@ -40,6 +40,7 @@ router.get("/signin", async (req, res) => {
     res.status(401).send({ message: "Unable to login", e });
   }
 });
+
 // update user
 router.patch("/profile", userAuth, async (req, res) => {
   try {
@@ -136,14 +137,14 @@ router.get("/profile", userAuth, async (req, res) => {
 router.patch("/delivery", userAuth, async (req, res) => {
   try {
     // req._id is the order id
-    const order = await Order.findById(req.body._id);
+    const order = await Order.findById(req.body.orderId);
     if (!order) {
       throw "No order found!";
     }
     const deliveryBoy = await DeliveryBoy.findById(order.deliveryBoy._id);
     order.status = "Delivered";
     deliveryBoy.pendingOrders = deliveryBoy.pendingOrders.filter(
-      (pendingOrder) => pendingOrder._id !== req.body._id
+      (pendingOrder) => String(pendingOrder._id) !== req.body.orderId
     );
     await deliveryBoy.save();
     await order.save();

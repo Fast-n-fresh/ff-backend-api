@@ -3,22 +3,7 @@ const router = new express.Router();
 const DeliveryBoy = require("../models/deliveryBoy");
 const deliveryBoyAuth = require("../middleware/deliveryBoyAuth");
 const Order = require("../models/order");
-router.post("/signup", async (req, res) => {
-  try {
-    const deliveryBoy = new DeliveryBoy({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      phoneNumber: req.body.phoneNumber,
-    });
-    await deliveryBoy.save();
-    res
-      .status(201)
-      .send({ message: "DeliveryBoy creted successfully", deliveryBoy });
-  } catch (e) {
-    res.status(401).send({ message: "an error occured", e });
-  }
-});
+
 router.get("/signin", async (req, res) => {
   try {
     const deliveryBoy = await DeliveryBoy.findByCredentials(
@@ -70,13 +55,13 @@ router.get("/order", deliveryBoyAuth, async (req, res) => {
 router.patch("/delivery", deliveryBoyAuth, async (req, res) => {
   try {
     // req._id is the order id
-    const order = await Order.findById(req.body._id);
+    const order = await Order.findById(req.body.orderId);
     if (!order) {
       throw "No order found!";
     }
     order.status = "Delivered";
     req.deliveryBoy.pendingOrders = req.deliveryBoy.pendingOrders.filter(
-      (pendingOrder) => pendingOrder._id !== req.body._id
+      (pendingOrder) => req.body.orderId !== String(pendingOrder._id)
     );
     await req.deliveryBoy.save();
     await order.save();
