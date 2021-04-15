@@ -7,7 +7,6 @@ const Feedback = require("../models/feedback");
 const Order = require("../models/order");
 const Category = require("../models/category");
 const Product = require("../models/product");
-const deliveryBoyAuth = require("../middleware/deliveryBoyAuth");
 
 // user signup
 router.post("/signup", async (req, res) => {
