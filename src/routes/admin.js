@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
     res.status(401).send({ message: "an error occured", e });
   }
 });
-router.get("/signin", async (req, res) => {
+router.post("/signin", async (req, res) => {
   try {
     const admin = await Admin.findByCredentials(
       req.body.email,

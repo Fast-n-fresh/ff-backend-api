@@ -28,7 +28,7 @@ router.post("/signup", async (req, res) => {
 });
 
 // user signin
-router.get("/signin", async (req, res) => {
+router.post("/signin", async (req, res) => {
   try {
     const user = await User.findByCredentials(
       req.body.email,

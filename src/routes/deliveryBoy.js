@@ -4,7 +4,7 @@ const DeliveryBoy = require("../models/deliveryBoy");
 const deliveryBoyAuth = require("../middleware/deliveryBoyAuth");
 const Order = require("../models/order");
 
-router.get("/signin", async (req, res) => {
+router.post("/signin", async (req, res) => {
   try {
     const deliveryBoy = await DeliveryBoy.findByCredentials(
       req.body.email,
