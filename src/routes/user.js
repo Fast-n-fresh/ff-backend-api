@@ -69,6 +69,15 @@ router.patch("/profile", userAuth, async (req, res) => {
   }
 });
 
+//delete user
+router.delete("/", userAuth, async (req, res) => {
+  try {
+    await req.user.remove();
+    res.send({ message: "User deleted successfully " });
+  } catch (e) {
+    res.status(400).send({ message: "Unable to update", e });
+  }
+});
 // create feedback
 router.post("/feedback", userAuth, async (req, res) => {
   try {
@@ -169,16 +178,14 @@ router.get("/category", async (req, res) => {
 // get products in a category
 router.get("/category/:category", async (req, res) => {
   try {
-    const category = await Category.findOne({ name: req.params.category });
+    const category = await Category.findOne({
+      name: req.params.category,
+    }).populate("products");
+
     if (!category) {
       throw "Invalid Category Name!!";
     }
-    const products = await Product.find({ category: category._id });
-    if (!products) {
-      res.send({ message: "No products in this category yet!" });
-      return;
-    }
-    res.send({ message: "Product list", products });
+    res.send({ message: "Product list", products: category.products });
   } catch (e) {
     res.status(400).send({ error: "An error occured!", e });
   }

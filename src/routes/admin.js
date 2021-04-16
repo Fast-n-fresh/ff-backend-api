@@ -33,23 +33,6 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-// craete delivery boy
-router.post("/deliveryBoy/signup", adminAuth, async (req, res) => {
-  try {
-    const deliveryBoy = new DeliveryBoy({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      phoneNumber: req.body.phoneNumber,
-    });
-    await deliveryBoy.save();
-    res
-      .status(201)
-      .send({ message: "DeliveryBoy creted successfully", deliveryBoy });
-  } catch (e) {
-    res.status(401).send({ message: "an error occured", e });
-  }
-});
 // update admin
 router.patch("/profile", adminAuth, async (req, res) => {
   try {
@@ -69,6 +52,50 @@ router.patch("/profile", adminAuth, async (req, res) => {
     res.send({ message: "Admin Profile Updated Successfully!" });
   } catch (e) {
     res.status(400).send({ message: "Unable to update", e });
+  }
+});
+// delete admin
+router.delete("/profile", adminAuth, async (req, res) => {
+  try {
+    req.admin.delete();
+    res.send({ message: "Admin deleted successfully!!" });
+  } catch (e) {
+    res.status(400).send({ message: "Unable to update", e });
+  }
+});
+// craete delivery boy
+router.post("/deliveryBoy/signup", adminAuth, async (req, res) => {
+  try {
+    const deliveryBoy = new DeliveryBoy({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      phoneNumber: req.body.phoneNumber,
+    });
+    await deliveryBoy.save();
+    res
+      .status(201)
+      .send({ message: "DeliveryBoy creted successfully", deliveryBoy });
+  } catch (e) {
+    res.status(401).send({ message: "an error occured", e });
+  }
+});
+// delete a deliveryBoy
+router.delete("/deliveryBoy", adminAuth, async (req, res) => {
+  try {
+    const deliveryBoy = await DeliveryBoy.findOne({ email: req.body.email });
+    // change the status of all the assingned orders to pending
+    deliveryBoy.pendingOrders.forEach(async (pendingOrder) => {
+      const order = await Order.findById(pendingOrder);
+      order.deliveryBoy = undefined;
+      order.status = "Pending";
+      await order.save();
+    });
+    await deliveryBoy.remove();
+    res.send({ message: "Delivery Boy Deleted Successfully" });
+    res.send();
+  } catch (e) {
+    res.status(401).send({ message: "an error occured", e });
   }
 });
 // create category
@@ -158,6 +185,41 @@ router.patch("/category/:categoryId", adminAuth, async (req, res) => {
     res.status(400).send({ error: "An error occured", e });
   }
 });
+router.delete("/category/:categoryId", adminAuth, async (req, res) => {
+  try {
+    const category = await Category.findById(req.params.categoryId);
+    if (!category) {
+      throw "Invalid Category ID provided";
+    }
+    const categoryDeleteObj = await category.remove();
+    res.send({
+      message: "Category deleted successfully !!",
+      categoryDeleteObj,
+    });
+  } catch (e) {
+    res.status(400).send({ error: "An error occured", e });
+  }
+});
+router.delete("/product/:productId", adminAuth, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.productId);
+    if (!product) {
+      throw "Invalid Product ID provided";
+    }
+    const category = await Category.findById(product.category);
+    category.products = category.products.filter(
+      (prod) => String(prod) !== req.params.productId
+    );
+    await category.save();
+    const productDeleteObj = await product.remove();
+    res.send({
+      message: "Product deleted successfully !!",
+      productDeleteObj,
+    });
+  } catch (e) {
+    res.status(400).send({ error: "An error occured", e });
+  }
+});
 // get feedbacks
 router.get("/feedback", adminAuth, async (req, res) => {
   try {
@@ -165,6 +227,11 @@ router.get("/feedback", adminAuth, async (req, res) => {
     if (!feedbacks) {
       throw "No Feedbacks Yet!";
     }
+    /* 
+      if the feedbacks do not contain 
+        1) Delivery Boy : The Delivery Boy Has been Deleted or The user never mentioned him/her
+        2) User : The user is deleted 
+    */
     res.send({ message: "Successfully sent feedbacks!", feedbacks });
   } catch (e) {
     res.status(404).send({ error: "There was an error! ", e });

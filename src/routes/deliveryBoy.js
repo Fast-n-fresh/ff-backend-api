@@ -18,7 +18,7 @@ router.post("/signin", async (req, res) => {
     res.status(401).send({ message: "Unable to login", e });
   }
 });
-// update admin
+// update deliveryBoy
 router.patch("/profile", deliveryBoyAuth, async (req, res) => {
   try {
     const updates = Object.keys(req.body);
@@ -39,6 +39,7 @@ router.patch("/profile", deliveryBoyAuth, async (req, res) => {
     res.status(400).send({ message: "Unable to update", e });
   }
 });
+
 //get assigned orders
 router.get("/order", deliveryBoyAuth, async (req, res) => {
   try {
