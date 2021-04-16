@@ -1,12 +1,6 @@
 const express = require("express");
 const router = new express.Router();
 const adminAuth = require("../middleware/adminAuth");
-// const Admin = require("../models/admin");
-// const Category = require("../models/category");
-// const Product = require("../models/product");
-// const Feedback = require("../models/feedback");
-// const Order = require("../models/order");
-// const DeliveryBoy = require("../models/deliveryBoy");
 const {
   getGrossDeliveryStatusController,
   adminSignUpController,
