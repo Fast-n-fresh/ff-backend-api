@@ -1,6 +1,6 @@
 # Nature's Delicacies API
 
-## getting started
+## Getting Started
 
 Note : Make sure you have 'npm' or 'yarn' installed on your local machine
 
@@ -28,11 +28,11 @@ To spin up the server run :
 foo@bar:~$ npm run dev
 ```
 
-This will fire off the 'start' script which will spin a local server on your machine on port 3000
+This will fire off the 'dev' script which will spin a local server on your machine on port PORT_NUMBER
 
-To use the api use this url as your base url :
+To use the API, use this URL as your base URL :
 
-http://localhost:3000
+http://localhost:PORT_NUMBER
 
 on your respective request manager (Preferably Postman)
 
