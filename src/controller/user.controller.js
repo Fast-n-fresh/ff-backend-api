@@ -3,6 +3,7 @@ const DeliveryBoy = require("../models/deliveryBoy");
 const Feedback = require("../models/feedback");
 const Order = require("../models/order");
 const Category = require("../models/category");
+const Product = require("../models/product");
 
 // user signup
 const userSignUpController = async (req, res) => {
@@ -122,8 +123,20 @@ const placeOrderController = async (req, res) => {
 // get previous orders
 const previousOrdersController = async (req, res) => {
   try {
-    res.send({ message: "List of previous", prevOrders: req.user.prevOrders });
+    const prevOrders = req.user.prevOrders
+    let orders = []
+    for(let order of prevOrders){
+      const ord =await Order.findById(order)
+      for(let i in ord.products){
+        const prod = await Product.findOne({_id:ord.products[i].product})
+        ord.products[i].product = prod
+      }
+      orders.push(ord)
+    }
+    console.log(orders)
+    res.send({ message: "List of previous", prevOrders: orders });
   } catch (e) {
+    console.log(e)
     res.status(400).send({ error: "An error occured!", e });
   }
 };
