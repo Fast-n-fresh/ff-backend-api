@@ -123,20 +123,21 @@ const placeOrderController = async (req, res) => {
 // get previous orders
 const previousOrdersController = async (req, res) => {
   try {
-    const prevOrders = req.user.prevOrders
-    let orders = []
-    for(let order of prevOrders){
-      const ord =await Order.findById(order)
-      for(let i in ord.products){
-        const prod = await Product.findOne({_id:ord.products[i].product})
-        ord.products[i].product = prod
+    const prevOrders = req.user.prevOrders;
+    let orders = [];
+    for (let order of prevOrders) {
+      const ord = await Order.findById(order);
+      if (ord === null) continue;
+      for (let i in ord.products) {
+        const prod = await Product.findOne({ _id: ord.products[i].product });
+        ord.products[i].product = prod;
       }
-      orders.push(ord)
+      orders.push(ord);
     }
-    console.log(orders)
+    console.log(orders);
     res.send({ message: "List of previous", prevOrders: orders });
   } catch (e) {
-    console.log(e)
+    console.log(e);
     res.status(400).send({ error: "An error occured!", e });
   }
 };
