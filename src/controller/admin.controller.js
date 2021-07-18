@@ -278,6 +278,17 @@ const getGrossDeliveryStatusController = async (req, res) => {
     res.status(404).send({ error: "An error occured!", e });
   }
 };
+const getAllDeliveryBoysController = async (req, res) => {
+  try {
+    const deliveryBoyList = await DeliveryBoy.find({});
+    res.send({
+      message: "List of DeliveryBoys",
+      deliveryBoyList,
+    });
+  } catch (e) {
+    res.status(404).send({ error: "An error occured!", e });
+  }
+};
 module.exports = {
   getGrossDeliveryStatusController,
   adminSignUpController,
@@ -295,4 +306,5 @@ module.exports = {
   adminDeleteController,
   deliveryBoySignupController,
   deliveryBoyDeleteController,
+  getAllDeliveryBoysController,
 };

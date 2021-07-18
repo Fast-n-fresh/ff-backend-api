@@ -18,6 +18,7 @@ const {
   adminDeleteController,
   deliveryBoySignupController,
   deliveryBoyDeleteController,
+  getAllDeliveryBoysController,
 } = require("../controller/admin.controller");
 
 // admin signup
@@ -69,4 +70,6 @@ router.patch("/order", adminAuth, updateOrderStatusController);
 /* Gross delivery status (returns the pending orders of each delivery boy)*/
 router.get("/delivery", adminAuth, getGrossDeliveryStatusController);
 
+/* get all available devivery boys */
+router.get("/delivery-boys", adminAuth, getAllDeliveryBoysController);
 module.exports = router;
