@@ -1,5 +1,6 @@
 const DeliveryBoy = require("../models/deliveryBoy");
 const Order = require("../models/order");
+const Product = require("../models/product");
 
 const deliveryBoySignInController = async (req, res) => {
   try {
@@ -38,9 +39,21 @@ const deliveryBoyProfileUpdateController = async (req, res) => {
 
 const deliveryBoyAssignedOrdersController = async (req, res) => {
   try {
+    const pendingOrderID = req.deliveryBoy.pendingOrders;
+    let pendingOrders = [];
+    for (let i of pendingOrderID) {
+      const pendingOrder = await Order.findById(i);
+      for (let j in pendingOrder["products"]) {
+        const product = await Product.findById(
+          pendingOrder["products"][j]["product"]
+        );
+        pendingOrder["products"][j]["product"] = product;
+      }
+      pendingOrders.push(pendingOrder);
+    }
     res.send({
       message: "Assigned Orders",
-      orders: req.deliveryBoy.pendingOrders,
+      orders: pendingOrders,
     });
   } catch (e) {
     res.status(404).send({ error: "An error occured!", e });
