@@ -19,6 +19,7 @@ const {
   deliveryBoySignupController,
   deliveryBoyDeleteController,
   getAllDeliveryBoysController,
+  adminProfileController,
 } = require("../controller/admin.controller");
 
 // admin signup
@@ -26,6 +27,9 @@ router.post("/signup", adminSignUpController);
 
 // admin signin
 router.post("/signin", adminSignInController);
+
+// get profile
+router.get("/profile", adminAuth, adminProfileController);
 
 // update admin
 router.patch("/profile", adminAuth, adminUpdateProfileController);

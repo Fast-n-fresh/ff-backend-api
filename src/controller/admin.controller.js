@@ -289,6 +289,13 @@ const getAllDeliveryBoysController = async (req, res) => {
     res.status(404).send({ error: "An error occured!", e });
   }
 };
+const adminProfileController = (req, res) => {
+  try {
+    res.send({ message: "Admin Profile", admin: req.admin });
+  } catch (e) {
+    res.status(404).send({ error: "an error occured!", e });
+  }
+};
 module.exports = {
   getGrossDeliveryStatusController,
   adminSignUpController,
@@ -307,4 +314,5 @@ module.exports = {
   deliveryBoySignupController,
   deliveryBoyDeleteController,
   getAllDeliveryBoysController,
+  adminProfileController,
 };
