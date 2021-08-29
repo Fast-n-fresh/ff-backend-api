@@ -11,21 +11,29 @@
 
 Change permissions for the startup, exit and log files
 
+```console
     chmod +x ./entrypoint.sh
     chmod +x ./exit.sh
     chmod +x ./logs.sh
+```
 
 To start the application :
 
+```console
     ./entrypoint.sh
+```
 
 To get logs :
 
+```console
     ./logs.sh
+```
 
 To stop the application :
 
+```console
     ./exit.sh
+```
 
 The docker and docker-compose commands are added to these files
 
