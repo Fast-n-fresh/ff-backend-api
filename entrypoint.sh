@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sudo docker-compose up ff-api
+sudo docker-compose up -d ff-api
