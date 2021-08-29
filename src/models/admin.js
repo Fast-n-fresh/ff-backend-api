@@ -49,7 +49,7 @@ adminSchema.methods.generateAuthToken = async function () {
     );
     return token;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 
@@ -66,7 +66,7 @@ adminSchema.statics.findByCredentials = async (email, password) => {
     }
     return admin;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 

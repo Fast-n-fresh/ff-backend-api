@@ -54,7 +54,7 @@ deliveryBoySchema.methods.generateAuthToken = async function () {
     );
     return token;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 

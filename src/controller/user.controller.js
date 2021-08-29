@@ -134,10 +134,10 @@ const previousOrdersController = async (req, res) => {
       }
       orders.push(ord);
     }
-    console.log(orders);
+    // console.log(orders);
     res.send({ message: "List of previous", prevOrders: orders });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(400).send({ error: "An error occured!", e });
   }
 };

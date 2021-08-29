@@ -82,7 +82,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
     }
     return user;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 
