@@ -1,0 +1,1145 @@
+{
+	"info": {
+		"_postman_id": "d6e5b955-33f4-4743-87f4-9797a1dd2a6e",
+		"name": "Fast'n'Fresh API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin Get Feedbacks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/feedback",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"feedback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Pending Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/order",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Delivery Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/delivery",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"delivery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Get Delivery Boys",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/delivery-boys",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"delivery-boys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Get Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code== 200){\r",
+							"    pm.environment.set('authToken',pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin-1@gmail.com\",\r\n    \"password\":\"admin-1-password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/signin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code== 201){\r",
+							"    pm.environment.set('authToken',pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Admin 2\",\r\n    \"email\":\"admin-2@gmail.com\",\r\n    \"password\":\"admin-2-password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Create Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"product-3\",\r\n    \"price\":1080,\r\n    \"metric\":\"pack\",\r\n    \"imageUrl\":\"https://product-3.com\",\r\n    \"description\":\"product-3 description\",\r\n    \"category\":\"category-4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/product",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Create Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"category-4\",\r\n    \"imageUrl\":\"https://category-4.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/category",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Create DeliveryBoy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code== 201){\r",
+							"    pm.environment.set('authToken',pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Delivery Boy 2\",\r\n    \"email\":\"deliveryboy-2@gmail.com\",\r\n    \"password\":\"deliveryboy-2-password\",\r\n    \"phoneNumber\":\"1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/deliveryBoy/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"deliveryBoy",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Assign Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\":\"60f959456074f90015b95a18\",\r\n    \"deliveryBoyName\":\"Delivery Boy 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/order",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Profile Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"admin-1\",\r\n    \"email\":\"admin-1@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Update Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"product-2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/product/6075d51528470b2bdca069c5",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"product",
+						"6075d51528470b2bdca069c5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Update Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"category-2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/category/6075d4d028470b2bdca069c2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"category",
+						"6075d4d028470b2bdca069c2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Delete DeliveryBoy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"deliveryboy-1@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/deliveryBoy",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"deliveryBoy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Delete Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/category/6075d4e328470b2bdca069c4",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"category",
+						"6075d4e328470b2bdca069c4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Delete Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/product/60758daf6364ab25cc704e9c",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"product",
+						"60758daf6364ab25cc704e9c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/admin/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Get Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/category",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Get Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/category/All",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"category",
+						"All"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Previous Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/order",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code== 201){\r",
+							"    pm.environment.set('authToken',pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"User 2\",\r\n    \"username\":\"username-2\",\r\n    \"email\":\"user-2@gmail.com\",\r\n    \"password\":\"user-2-password\",\r\n    \"phoneNumber\":\"1234567890\",\r\n    \"address\":\"user-2 address\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code== 200){\r",
+							"    pm.environment.set('authToken',pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"user-1@gmail.com\",\r\n    \"password\":\"user-1-password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/signin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Feedback",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\":\"Great Service \\nDelivery was on time\",\r\n    \"rating\":5,\r\n    \"deliveryBoyName\":\"Delivery Boy 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/feedback",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"feedback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Place Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\":[\r\n        {\r\n            \"product\":\"6075d5bd28470b2bdca069c9\",\r\n            \"quantity\":3\r\n        },\r\n        {\r\n            \"product\":\"6075d64628470b2bdca069cc\",\r\n            \"quantity\":6\r\n        },\r\n        {\r\n            \"product\":\"6075d68a28470b2bdca069cf\",\r\n            \"quantity\":7\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/order",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Profile Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"user-1\",\r\n    \"email\":\"user-1@gmail.com\",\r\n    \"username\":\"username-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Delivery Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\":\"6076e00f540061226061fbe0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/delivery",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"delivery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeliveryBoy Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/deliveryBoy/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deliveryBoy",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeliveryBoy Assigned Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/deliveryBoy/order",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deliveryBoy",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeliveryBoy Signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code== 200){\r",
+							"    pm.environment.set('authToken',pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"deliveryboy-1@gmail.com\",\r\n    \"password\":\"deliveryboy-1-password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/deliveryBoy/signin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deliveryBoy",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeliveryBoy Profile Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"deliveryBoy-1\",\r\n    \"email\":\"deliveryBoy-1@gmail.com\",\r\n    \"phoneNumber\":\"9876543210\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/deliveryBoy/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deliveryBoy",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeliveryBoy Delvery Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\":\"6076e00f540061226061fbe0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/deliveryBoy/delivery",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deliveryBoy",
+						"delivery"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
