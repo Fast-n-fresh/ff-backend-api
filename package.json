@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "env-cmd -f dev.env nodemon nodemon src/index.js",
-    "prod": "env-cmd -f prod.env nodemon nodemon src/index.js"
+    "prod": "env-cmd -f prod.env nodemon nodemon src/index.js",
+    "composed":"nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
