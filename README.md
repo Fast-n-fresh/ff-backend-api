@@ -2,7 +2,7 @@
 
 ## There are Two ways To Get Started With:
 
-1.  Using **Docker**
+1.  Using **Docker** :whale:
 2.  Using **npm/yarn**
 
 <hr></hr>
@@ -75,7 +75,7 @@ foo@bar:~$ npm run dev
 
 ```
 
-This will fire off the 'dev' script which will spin a local server on your machine on port PORT_NUMBER
+This will fire off :rocket: the 'dev' script which will spin a local server on your machine on port PORT_NUMBER
 
   <hr></hr>
 
@@ -84,6 +84,7 @@ To use the API, use this URL as your base URL :
 http://localhost:PORT_NUMBER
 
 on your respective request manager (Preferably Postman)
+
 The [Post Man Collection](https://github.com/Fast-n-fresh/ff-backend-api/blob/main/fast_n_fresh_api.postman_collection.json) is added in the repository
 
 ### Happy Coding :wink: !!
