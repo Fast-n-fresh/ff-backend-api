@@ -1,3 +1,9 @@
 dev.env
 prod.env
 node_modules
+terraform/terraform.tfvars
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/.terraform.tfstate.lock.info
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
