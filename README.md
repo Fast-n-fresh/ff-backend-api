@@ -1,4 +1,4 @@
-# Nature's Delicacies API
+# Fast'n'Fresh API
 
 ## There are Two ways To Get Started With:
 
